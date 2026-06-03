@@ -25,4 +25,7 @@ junit-jupiter                  = { group = "org.junit.jupiter", name = "junit-ju
 [plugins]
 kotlin-jvm                     = { id = "org.jetbrains.kotlin.jvm",                version.ref = "kotlin" }
 kotlin-serialization           = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ktor                           = { id = "io.ktor.plugin",                          version.ref = "ktor" }
+# Note: not using io.ktor.plugin yet — its bundled Shadow plugin is
+# incompatible with Gradle 8.10+. Use the standard `application` plugin instead.
+# Add io.ktor.plugin back when we want its Docker / fat-jar conveniences and
+# it's been updated.
