@@ -16,6 +16,12 @@ concurrency:
   group: backend-${{ github.ref }}
   cancel-in-progress: true
 
+# Opt every JS action into Node 24 ahead of the June 16 2026 forced upgrade.
+# Safe to remove once Node 24 is the runner default and every action we use
+# ships a release that targets it.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   build:
     name: Build and test
