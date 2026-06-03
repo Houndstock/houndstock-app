@@ -20,9 +20,6 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
 
     steps:
       - name: Checkout
@@ -34,7 +31,7 @@ jobs:
       - name: Check for backend Gradle project
         id: check
         run: |
-          if [ -f settings.gradle.kts ] || [ -f settings.gradle ]; then
+          if [ -f backend/settings.gradle.kts ] || [ -f backend/settings.gradle ]; then
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
@@ -54,8 +51,10 @@ jobs:
 
       - name: Build
         if: steps.check.outputs.present == 'true'
+        working-directory: backend
         run: gradle build --stacktrace
 
       - name: Test
         if: steps.check.outputs.present == 'true'
+        working-directory: backend
         run: gradle test --stacktrace
