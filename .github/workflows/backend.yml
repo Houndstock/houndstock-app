@@ -1,0 +1,61 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # The backend Gradle project does not exist yet. Skip the rest of the job
+      # gracefully until backend/settings.gradle.kts shows up. Remove this guard
+      # once the Ktor scaffold lands.
+      - name: Check for backend Gradle project
+        id: check
+        run: |
+          if [ -f settings.gradle.kts ] || [ -f settings.gradle ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "Backend Gradle project not present yet; skipping build steps."
+          fi
+
+      - name: Set up JDK 21
+        if: steps.check.outputs.present == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle (with caching)
+        if: steps.check.outputs.present == 'true'
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        if: steps.check.outputs.present == 'true'
+        run: gradle build --stacktrace
+
+      - name: Test
+        if: steps.check.outputs.present == 'true'
+        run: gradle test --stacktrace
