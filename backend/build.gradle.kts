@@ -40,6 +40,9 @@ dependencies {
     // Test
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.junit.jupiter)
+    // Gradle 8.8+ needs the JUnit Platform launcher on the test runtime
+    // classpath explicitly; without it, "Failed to load JUnit Platform".
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.test {
