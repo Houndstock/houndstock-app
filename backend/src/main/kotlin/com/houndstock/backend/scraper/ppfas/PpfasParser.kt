@@ -71,8 +71,9 @@ class PpfasParser {
 
             // Valid holdings rows have an ISIN in column C.
             if (!ISIN_REGEX.matcher(isin).matches()) continue
+            if (colB.isBlank()) continue
 
-            val name = colB.ifBlank { continue }
+            val name = colB
             val industry = stringCell(row, 3)?.trim()
             val quantity = numericCell(row, 4)?.toLong()
             val marketValueLakhs = numericCell(row, 5) ?: continue
