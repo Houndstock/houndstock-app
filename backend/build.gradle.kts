@@ -37,6 +37,22 @@ dependencies {
     // Logging
     implementation(libs.logback.classic)
 
+    // Persistence
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.kotlin.datetime)
+    implementation(libs.postgresql)
+    implementation(libs.hikari.cp)
+    implementation(libs.flyway.core)
+    implementation(libs.flyway.postgresql)
+
+    // XLSX parsing
+    implementation(libs.poi.ooxml)
+
+    // kotlinx-datetime (used by Exposed columns and parser)
+    implementation(libs.kotlinx.datetime)
+
     // Test
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.junit.jupiter)

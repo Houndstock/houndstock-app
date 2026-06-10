@@ -4,6 +4,18 @@ ktor = "3.0.3"
 logback = "1.5.12"
 junit = "5.11.3"
 
+# Persistence
+exposed = "0.55.0"
+postgresql = "42.7.4"
+hikari = "6.0.0"
+flyway = "10.20.1"
+
+# Parsing (XLSX)
+poi = "5.3.0"
+
+# Misc
+kotlinxDatetime = "0.6.1"
+
 [libraries]
 ktor-server-core               = { group = "io.ktor", name = "ktor-server-core",                version.ref = "ktor" }
 ktor-server-netty              = { group = "io.ktor", name = "ktor-server-netty",               version.ref = "ktor" }
@@ -19,6 +31,23 @@ ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-conte
 
 logback-classic                = { group = "ch.qos.logback", name = "logback-classic",          version.ref = "logback" }
 
+# Persistence
+exposed-core                   = { group = "org.jetbrains.exposed", name = "exposed-core",       version.ref = "exposed" }
+exposed-dao                    = { group = "org.jetbrains.exposed", name = "exposed-dao",        version.ref = "exposed" }
+exposed-jdbc                   = { group = "org.jetbrains.exposed", name = "exposed-jdbc",       version.ref = "exposed" }
+exposed-kotlin-datetime        = { group = "org.jetbrains.exposed", name = "exposed-kotlin-datetime", version.ref = "exposed" }
+postgresql                     = { group = "org.postgresql", name = "postgresql",                version.ref = "postgresql" }
+hikari-cp                      = { group = "com.zaxxer", name = "HikariCP",                      version.ref = "hikari" }
+flyway-core                    = { group = "org.flywaydb", name = "flyway-core",                 version.ref = "flyway" }
+flyway-postgresql              = { group = "org.flywaydb", name = "flyway-database-postgresql",  version.ref = "flyway" }
+
+# XLSX
+poi-ooxml                      = { group = "org.apache.poi", name = "poi-ooxml",                 version.ref = "poi" }
+
+# Datetime
+kotlinx-datetime               = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",   version.ref = "kotlinxDatetime" }
+
+# Test
 ktor-server-test-host          = { group = "io.ktor", name = "ktor-server-test-host",           version.ref = "ktor" }
 junit-jupiter                  = { group = "org.junit.jupiter", name = "junit-jupiter",         version.ref = "junit" }
 junit-platform-launcher        = { group = "org.junit.platform", name = "junit-platform-launcher" }
@@ -26,7 +55,3 @@ junit-platform-launcher        = { group = "org.junit.platform", name = "junit-p
 [plugins]
 kotlin-jvm                     = { id = "org.jetbrains.kotlin.jvm",                version.ref = "kotlin" }
 kotlin-serialization           = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-# Note: not using io.ktor.plugin yet — its bundled Shadow plugin is
-# incompatible with Gradle 8.10+. Use the standard `application` plugin instead.
-# Add io.ktor.plugin back when we want its Docker / fat-jar conveniences and
-# it's been updated.
