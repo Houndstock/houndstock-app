@@ -74,10 +74,12 @@ class PpfasParserTest {
             .filter { it.isin.isBlank() || !ISIN_RE.matches(it.isin) }
         assertEquals(emptyList<Any>(), nonIsin)
 
-        // Every weight fraction must be in (0, 1]; a > 1 value would indicate
+        // Every weight fraction must be in [0, 1]; a > 1 value would indicate
         // we accidentally captured a Total / Sub Total row written as percent.
+        // Zero is legitimate (e.g. PPDAAF's Apr 2026 file has two positions that
+        // netted to zero during the month but are still listed for context).
         val outOfRange = portfolios.flatMap { it.holdings }
-            .filter { it.weightFraction <= BigDecimal.ZERO || it.weightFraction > BigDecimal.ONE }
+            .filter { it.weightFraction < BigDecimal.ZERO || it.weightFraction > BigDecimal.ONE }
         assertEquals(
             emptyList<Any>(),
             outOfRange,
